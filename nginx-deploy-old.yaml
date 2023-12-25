@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+  uid: 6443abf8-efe4-11e9-a596-42010a9400e2
+  resourceVersion: '931189152'
+  generation: 21
+  creationTimestamp: '2019-10-16T07:13:02Z'
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  annotations:
+    deployment.kubernetes.io/revision: '9'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"extensions/v1beta1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"7"},"creationTimestamp":"2019-10-16T07:13:02Z","generation":9,"labels":{"app.kubernetes.io/name":"ingress-nginx","app.kubernetes.io/part-of":"ingress-nginx"},"name":"nginx-ingress-controller","namespace":"ingress-nginx","resourceVersion":"40515864","selfLink":"/apis/extensions/v1beta1/namespaces/ingress-nginx/deployments/nginx-ingress-controller","uid":"6443abf8-efe4-11e9-a596-42010a9400e2"},"spec":{"progressDeadlineSeconds":600,"replicas":5,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"ingress-nginx","app.kubernetes.io/part-of":"ingress-nginx"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"prometheus.io/port":"10254","prometheus.io/scrape":"true"},"creationTimestamp":null,"labels":{"app.kubernetes.io/name":"ingress-nginx","app.kubernetes.io/part-of":"ingress-nginx"}},"spec":{"containers":[{"args":["/nginx-ingress-controller","--configmap=$(POD_NAMESPACE)/nginx-configuration","--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services","--udp-services-configmap=$(POD_NAMESPACE)/udp-services","--publish-service=$(POD_NAMESPACE)/ingress-nginx","--annotations-prefix=nginx.ingress.kubernetes.io"],"env":[{"name":"POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}},{"name":"ROLLING","value":"4"}],"image":"quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1","imagePullPolicy":"IfNotPresent","lifecycle":{"preStop":{"exec":{"command":["/wait-shutdown"]}}},"livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":12},"name":"nginx-ingress-controller","ports":[{"containerPort":80,"name":"http","protocol":"TCP"},{"containerPort":443,"name":"https","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":10},"resources":{},"securityContext":{"allowPrivilegeEscalation":true,"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["ALL"]},"runAsUser":33},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"nginx-ingress-serviceaccount","serviceAccountName":"nginx-ingress-serviceaccount","terminationGracePeriodSeconds":300}}},"status":{"availableReplicas":5,"conditions":[{"lastTransitionTime":"2020-01-23T02:06:53Z","lastUpdateTime":"2020-01-23T02:06:53Z","message":"Deployment
+      has minimum
+      availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2019-10-16T08:05:01Z","lastUpdateTime":"2020-02-13T04:09:50Z","message":"ReplicaSet
+      \"nginx-ingress-controller-595bccdb69\" has successfully
+      progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":9,"readyReplicas":5,"replicas":5,"updatedReplicas":5}}
+  selfLink: /apis/apps/v1/namespaces/ingress-nginx/deployments/nginx-ingress-controller
+status:
+  observedGeneration: 21
+  replicas: 29
+  updatedReplicas: 29
+  readyReplicas: 23
+  availableReplicas: 23
+  unavailableReplicas: 6
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2020-02-21T14:01:56Z'
+      lastTransitionTime: '2019-10-16T08:05:01Z'
+      reason: NewReplicaSetAvailable
+      message: >-
+        ReplicaSet "nginx-ingress-controller-7cf8f87985" has successfully
+        progressed.
+    - type: Available
+      status: 'False'
+      lastUpdateTime: '2023-03-23T04:43:54Z'
+      lastTransitionTime: '2023-03-23T04:43:54Z'
+      reason: MinimumReplicasUnavailable
+      message: Deployment does not have minimum availability.
+spec:
+  replicas: 29
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: ingress-nginx
+        app.kubernetes.io/part-of: ingress-nginx
+      annotations:
+        prometheus.io/port: '10254'
+        prometheus.io/scrape: 'true'
+    spec:
+      containers:
+        - name: nginx-ingress-controller
+          image: >-
+            quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1
+          args:
+            - /nginx-ingress-controller
+            - '--configmap=$(POD_NAMESPACE)/nginx-configuration'
+            - '--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services'
+            - '--udp-services-configmap=$(POD_NAMESPACE)/udp-services'
+            - '--publish-service=$(POD_NAMESPACE)/ingress-nginx'
+            - '--annotations-prefix=nginx.ingress.kubernetes.io'
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: ROLLING
+              value: '5'
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 12
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            timeoutSeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /wait-shutdown
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+              drop:
+                - ALL
+            runAsUser: 33
+            allowPrivilegeEscalation: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 300
+      dnsPolicy: ClusterFirst
+      serviceAccountName: nginx-ingress-serviceaccount
+      serviceAccount: nginx-ingress-serviceaccount
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

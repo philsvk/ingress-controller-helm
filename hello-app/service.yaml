@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: backend
+  labels:
+    app: backend-app
+spec:
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 8080
+  selector:
+    app: eks-sample-linux-app
+  type: ClusterIP

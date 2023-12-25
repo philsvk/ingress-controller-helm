@@ -1,0 +1,102 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: convolab-api-analytics-ingress
+  namespace: backend
+  labels:
+    app.kubernetes.io/instance: kbank-live
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 16m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '3600'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '3600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '3600'
+    nginx.ingress.kubernetes.io/session-cookie-expires: '172800'
+    nginx.ingress.kubernetes.io/session-cookie-max-age: '172800'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+    nginx.ingress.kubernetes.io/use-proxy-protocol: 'true'
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+  finalizers:
+    - networking.gke.io/ingress-finalizer
+  selfLink: >-
+    /apis/networking.k8s.io/v1/namespaces/default/ingresses/convolab-api-analytics-ingress
+spec:
+  tls:
+    - hosts:
+        - poc-ingress-upgrade.convolab.ai
+      secretName: tls-secret
+  rules:
+    - host: poc-ingress-upgrade.convolab.ai
+      http:
+        paths:
+          - path: /analytics/api/reporting/jobs/download/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/messages/stats
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/messages/heatmap
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/messages/origin/search
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/bots/origin/messages
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/bots/origin/chatreport
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/conversations/origin/summary/download
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/conversations/infos
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/confidence
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
+          - path: /api/users/.*/messages
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 3000
